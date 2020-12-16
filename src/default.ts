@@ -9,6 +9,7 @@ import { GitCommitPatternRecord } from "./declare";
 export const DefaultGitCommitPatternRecord: GitCommitPatternRecord = {
 
     allowWorkInProgress: true,
+    typeFormat: 'double-colon',
     types: [
         {
             deliver: 'feature',

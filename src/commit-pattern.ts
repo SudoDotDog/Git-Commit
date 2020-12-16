@@ -14,6 +14,7 @@ export class GitCommitPattern {
         return GitCommitPattern.fromRecord({
 
             allowWorkInProgress: true,
+            typeFormat: 'double-colon',
             types: [],
             modules: [],
         });
