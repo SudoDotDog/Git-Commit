@@ -18,6 +18,7 @@ export type GitCommitPatternModule = {
 
 export type GitCommitPatternRecord = {
 
+    readonly allowWorkInProgress: boolean;
     readonly types: GitCommitPatternType[];
     readonly modules: GitCommitPatternModule[];
 };
