@@ -14,6 +14,12 @@ export type GitCommitInfo = {
     readonly resolve?: string;
 };
 
+export type GitCommitResult = {
+
+    readonly commit: string;
+    readonly body: string;
+};
+
 export type GitCommitPatternType = {
 
     readonly deliver: string;
