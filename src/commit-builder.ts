@@ -8,6 +8,11 @@ import { GitCommitPattern } from "./commit-pattern";
 
 export class GitCommitBuilder {
 
+    public static withDefaultPattern(): GitCommitBuilder {
+
+        return GitCommitBuilder.withPattern(GitCommitPattern.default());
+    }
+
     public static withPattern(pattern: GitCommitPattern): GitCommitBuilder {
 
         return new GitCommitBuilder(pattern);

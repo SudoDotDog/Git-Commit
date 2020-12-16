@@ -80,6 +80,20 @@ export class GitCommitPattern {
         return this;
     }
 
+    public verifyType(deliver: string): boolean {
+
+        return this._types.has(deliver);
+    }
+
+    public verifyModule(moduleName: string): boolean {
+
+        if (moduleName === '*') {
+            return true;
+        }
+
+        return this._modules.has(moduleName);
+    }
+
     public loadTypeArray(types: GitCommitPatternType[]): this {
 
         for (const type of types) {
