@@ -8,9 +8,9 @@ import { GitCommitPattern } from "./commit-pattern";
 
 export class GitCommitBuilder {
 
-    public static create(): GitCommitBuilder {
+    public static withPattern(pattern: GitCommitPattern): GitCommitBuilder {
 
-        return new GitCommitBuilder();
+        return new GitCommitBuilder(pattern);
     }
 
     private readonly _pattern: GitCommitPattern;
