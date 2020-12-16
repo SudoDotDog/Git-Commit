@@ -1,0 +1,38 @@
+{
+  "name": "@sudoo/git-commit",
+  "version": "1.0.0",
+  "description": ":metal: Git Commit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SudoDotDog/Git-Commit.git"
+  },
+  "keywords": [
+    "Sudoo"
+  ],
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SudoDotDog/Git-Commit/issues"
+  },
+  "homepage": "https://github.com/SudoDotDog/Git-Commit#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@sudoo/io": "^1.8.0",
+    "@sudoo/triforce": "^2.9.11"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "sourceMap": true
+  }
+}
