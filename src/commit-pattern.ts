@@ -24,15 +24,22 @@ export class GitCommitPattern {
 
     private _allowWorkInProgress: boolean;
 
-    private readonly types: Map<string, GitCommitPatternType>;
-    private readonly modules: Map<string, GitCommitPatternModule>;
+    private readonly _types: Map<string, GitCommitPatternType>;
+    private readonly _modules: Map<string, GitCommitPatternModule>;
 
     private constructor(record: GitCommitPatternRecord) {
 
         this._allowWorkInProgress = record.allowWorkInProgress;
 
-        this.types = new Map<string, GitCommitPatternType>();
-        this.modules = new Map<string, GitCommitPatternModule>();
+        this._types = new Map<string, GitCommitPatternType>();
+        this._modules = new Map<string, GitCommitPatternModule>();
+
+        this.loadTypeArray(record.types);
+        this.loadModuleArray(record.modules);
+    }
+
+    public get allowWorkInProgress(): boolean {
+        return this._allowWorkInProgress;
     }
 
     public enableWorkInProgress(): this {
@@ -45,5 +52,62 @@ export class GitCommitPattern {
 
         this._allowWorkInProgress = false;
         return this;
+    }
+
+    public addType(type: GitCommitPatternType): this {
+
+        if (this._types.has(type.deliver)) {
+            throw new Error(`[Git-Commit] Duplicated type: "${type.deliver}"`);
+        }
+        this._types.set(type.deliver, type);
+        return this;
+    }
+
+    public addModule(module: GitCommitPatternModule): this {
+
+        if (this._modules.has(module.name)) {
+            throw new Error(`[Git-Commit] Duplicated module: "${module.name}"`);
+        }
+        this._modules.set(module.name, module);
+        return this;
+    }
+
+    public loadTypeArray(types: GitCommitPatternType[]): this {
+
+        for (const type of types) {
+            this.addType(type);
+        }
+        return this;
+    }
+
+    public loadModuleArray(modules: GitCommitPatternModule[]): this {
+
+        for (const module of modules) {
+            this.addModule(module);
+        }
+        return this;
+    }
+
+    public getRecord(): GitCommitPatternRecord {
+
+        return {
+            allowWorkInProgress: this._allowWorkInProgress,
+            types: this.getTypeArray(),
+            modules: this.getModuleArray(),
+        };
+    }
+
+    public getTypeArray(): GitCommitPatternType[] {
+
+        const result: GitCommitPatternType[] = [];
+        result.push(...this._types.values());
+        return result;
+    }
+
+    public getModuleArray(): GitCommitPatternModule[] {
+
+        const result: GitCommitPatternModule[] = [];
+        result.push(...this._modules.values());
+        return result;
     }
 }
