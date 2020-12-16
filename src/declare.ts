@@ -10,14 +10,14 @@ export type GitCommitInfo = {
     readonly modules: string[];
     readonly subject: string;
 
-    readonly explanation?: string[];
-    readonly resolve?: string;
+    readonly explanations?: string[];
+    readonly resolves?: string[];
 };
 
 export type GitCommitResult = {
 
     readonly commit: string;
-    readonly body: string;
+    readonly body?: string;
 };
 
 export type GitCommitPatternType = {
