@@ -4,20 +4,14 @@
  * @description Commit Pattern
  */
 
-import { GitCommitPatternModule, GitCommitPatternRecord, GitCommitPatternType } from "./declare";
-import { DefaultGitCommitPatternRecord } from "./default";
+import { GitCommitPatternModule, GitCommitPatternRecord, GitCommitPatternType, GitCommitTypeFormat } from "./declare";
+import { DefaultGitCommitPatternRecord, EmptyGitCommitPatternRecord } from "./default";
 
 export class GitCommitPattern {
 
     public static empty(): GitCommitPattern {
 
-        return GitCommitPattern.fromRecord({
-
-            allowWorkInProgress: true,
-            typeFormat: 'double-colon',
-            types: [],
-            modules: [],
-        });
+        return GitCommitPattern.fromRecord(EmptyGitCommitPatternRecord);
     }
 
     public static default(): GitCommitPattern {
@@ -32,6 +26,8 @@ export class GitCommitPattern {
 
 
     private _allowWorkInProgress: boolean;
+
+    private _typeFormat: GitCommitTypeFormat;
 
     private readonly _types: Map<string, GitCommitPatternType>;
     private readonly _modules: Map<string, GitCommitPatternModule>;
@@ -50,6 +46,9 @@ export class GitCommitPattern {
     public get allowWorkInProgress(): boolean {
         return this._allowWorkInProgress;
     }
+    public get typeFormat(): GitCommitTypeFormat {
+        return this._typeFormat;
+    }
 
     public enableWorkInProgress(): this {
 
@@ -60,6 +59,12 @@ export class GitCommitPattern {
     public disableWorkInProgress(): this {
 
         this._allowWorkInProgress = false;
+        return this;
+    }
+
+    public setTypeFormat(format: GitCommitTypeFormat): this {
+
+        this._typeFormat = format;
         return this;
     }
 
@@ -115,6 +120,7 @@ export class GitCommitPattern {
 
         return {
             allowWorkInProgress: this._allowWorkInProgress,
+            typeFormat: this._typeFormat,
             types: this.getTypeArray(),
             modules: this.getModuleArray(),
         };

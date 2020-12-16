@@ -26,13 +26,15 @@ export type GitCommitPatternModule = {
     readonly description?: string;
 };
 
+export type GitCommitTypeFormat = "double-colon"
+    | "brackets"
+    | "parentheses";
+
 export type GitCommitPatternRecord = {
 
     readonly allowWorkInProgress: boolean;
 
-    readonly typeFormat: "double-colon"
-    | "brackets"
-    | "parentheses";
+    readonly typeFormat: GitCommitTypeFormat;
 
     readonly types: GitCommitPatternType[];
     readonly modules: GitCommitPatternModule[];
