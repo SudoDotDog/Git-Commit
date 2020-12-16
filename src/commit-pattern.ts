@@ -35,6 +35,7 @@ export class GitCommitPattern {
     private constructor(record: GitCommitPatternRecord) {
 
         this._allowWorkInProgress = record.allowWorkInProgress;
+        this._typeFormat = record.typeFormat;
 
         this._types = new Map<string, GitCommitPatternType>();
         this._modules = new Map<string, GitCommitPatternModule>();

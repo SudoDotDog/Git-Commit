@@ -15,7 +15,6 @@
     "url": "https://github.com/SudoDotDog/Git-Commit/issues"
   },
   "homepage": "https://github.com/SudoDotDog/Git-Commit#readme",
-  "dependencies": {},
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
     "@sudoo/triforce": "^2.9.11"
