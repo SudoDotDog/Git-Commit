@@ -5,22 +5,30 @@
  */
 
 import { GitCommitPatternModule, GitCommitPatternRecord, GitCommitPatternType } from "./declare";
+import { DefaultGitCommitPatternRecord } from "./default";
 
 export class GitCommitPattern {
 
     public static empty(): GitCommitPattern {
 
-        return new GitCommitPattern({
+        return GitCommitPattern.fromRecord({
+
             allowWorkInProgress: true,
             types: [],
             modules: [],
         });
     }
 
+    public static default(): GitCommitPattern {
+
+        return GitCommitPattern.fromRecord(DefaultGitCommitPatternRecord);
+    }
+
     public static fromRecord(record: GitCommitPatternRecord): GitCommitPattern {
 
         return new GitCommitPattern(record);
     }
+
 
     private _allowWorkInProgress: boolean;
 
