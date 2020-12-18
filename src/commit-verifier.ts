@@ -5,7 +5,7 @@
  */
 
 import { GitCommitPattern } from "./commit-pattern";
-import { GitCommitResult } from "./declare";
+import { GitCommitResult, GitCommitTypeFormat } from "./declare";
 
 export class GitCommitVerifier {
 
@@ -24,5 +24,27 @@ export class GitCommitVerifier {
     private constructor(pattern: GitCommitPattern) {
 
         this._pattern = pattern;
+    }
+
+    private _verifyCommitMessage(message: string) {
+
+        const parsedFormat: string | GitCommitTypeFormat = this._pattern.typeFormat as any;
+
+        switch (parsedFormat) {
+
+            case 'double-colon':
+                return this._verifyDoubleColonCommitMessage(message);
+            // case 'brackets':
+            //     return this._buildBracketsCommitMessage(info);
+            // case 'parentheses':
+            //     return this._buildParenthesesCommitMessage(info);
+        }
+
+        throw new Error(`[Git-Commit] Unknown type format: "${this._pattern.typeFormat as any}"`);
+    }
+
+    private _verifyDoubleColonCommitMessage(message: string) {
+
+
     }
 }
