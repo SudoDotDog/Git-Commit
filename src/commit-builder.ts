@@ -28,59 +28,30 @@ export class GitCommitBuilder {
 
     public buildCommit(info: GitCommitInfo): GitCommitResult {
 
+        return {
+            message: this._buildCommitMessage(info),
+            body: this._buildCommitBody(info),
+        };
+    }
+
+    private _buildCommitMessage(info: GitCommitInfo): string {
+
         const parsedFormat: string | GitCommitTypeFormat = this._pattern.typeFormat as any;
 
         switch (parsedFormat) {
 
             case 'double-colon':
-                return this._buildDoubleColonCommit(info);
+                return this._buildDoubleColonCommitMessage(info);
             case 'brackets':
-                return this._buildBracketsCommit(info);
+                return this._buildBracketsCommitMessage(info);
             case 'parentheses':
-                return this._buildParenthesesCommit(info);
+                return this._buildParenthesesCommitMessage(info);
         }
 
         throw new Error(`[Git-Commit] Unknown type format: "${this._pattern.typeFormat as any}"`);
     }
 
-    private _buildDoubleColonCommit(info: GitCommitInfo): GitCommitResult {
-
-        return {
-            commit: `${info.type}(${this._buildModule(info)}): ${info.subject}`,
-            body: this._buildBody(info),
-        };
-    }
-
-    private _buildBracketsCommit(info: GitCommitInfo): GitCommitResult {
-
-        return {
-            commit: `[${info.type} - ${this._buildModule(info)}] ${info.subject}`,
-            body: this._buildBody(info),
-        };
-    }
-
-    private _buildParenthesesCommit(info: GitCommitInfo): GitCommitResult {
-
-        return {
-            commit: `(${info.type} - ${this._buildModule(info)}) ${info.subject}`,
-            body: this._buildBody(info),
-        };
-    }
-
-    private _buildModule(info: GitCommitInfo): string {
-
-        if (!Array.isArray(info.modules)) {
-            return '*';
-        }
-
-        if (info.modules.length === 0) {
-            return '*';
-        }
-
-        return info.modules.join(',');
-    }
-
-    private _buildBody(info: GitCommitInfo): string | undefined {
+    private _buildCommitBody(info: GitCommitInfo): string | undefined {
 
         if (!Array.isArray(info.explanations)
             && !Array.isArray(info.resolves)) {
@@ -105,5 +76,33 @@ export class GitCommitBuilder {
         }
 
         return lines.join('\n');
+    }
+
+    private _buildDoubleColonCommitMessage(info: GitCommitInfo): string {
+
+        return `${info.type}(${this._buildModule(info)}): ${info.subject}`;
+    }
+
+    private _buildBracketsCommitMessage(info: GitCommitInfo): string {
+
+        return `[${info.type} - ${this._buildModule(info)}] ${info.subject}`;
+    }
+
+    private _buildParenthesesCommitMessage(info: GitCommitInfo): string {
+
+        return `(${info.type} - ${this._buildModule(info)}) ${info.subject}`;
+    }
+
+    private _buildModule(info: GitCommitInfo): string {
+
+        if (!Array.isArray(info.modules)) {
+            return '*';
+        }
+
+        if (info.modules.length === 0) {
+            return '*';
+        }
+
+        return info.modules.join(',');
     }
 }

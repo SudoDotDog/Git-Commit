@@ -16,7 +16,7 @@ export type GitCommitInfo = {
 
 export type GitCommitResult = {
 
-    readonly commit: string;
+    readonly message: string;
     readonly body?: string;
 };
 

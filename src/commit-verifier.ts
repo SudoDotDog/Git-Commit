@@ -5,6 +5,7 @@
  */
 
 import { GitCommitPattern } from "./commit-pattern";
+import { GitCommitResult } from "./declare";
 
 export class GitCommitVerifier {
 
