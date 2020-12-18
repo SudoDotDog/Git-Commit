@@ -55,6 +55,7 @@ export class GitCommitVerifier {
         const typeRemoved: string = type.substring(type.length);
 
         statement: if (typeRemoved.substring(0, 1) === ':') {
+
             if (typeRemoved.substring(1, 2) === ' '
                 && typeRemoved.substring(1, 2) !== ' ') {
                 break statement;
@@ -63,15 +64,12 @@ export class GitCommitVerifier {
         } else if (typeRemoved.substring(0, 1) === '(') {
 
             const rightIndex: number = typeRemoved.indexOf(')');
-
             const innerContent: string = typeRemoved.substring(1, rightIndex);
-
             if (innerContent === '*') {
                 break statement;
             }
 
             const splited: string[] = innerContent.split(',');
-
             if (splited.length === 0) {
                 return false;
             }
@@ -83,8 +81,8 @@ export class GitCommitVerifier {
             }
 
             const modulesRemoved = typeRemoved.substring(rightIndex);
-
             if (modulesRemoved.substring(0, 1) === ':') {
+
                 if (typeRemoved.substring(1, 2) === ' '
                     && typeRemoved.substring(1, 2) !== ' ') {
                     break statement;
