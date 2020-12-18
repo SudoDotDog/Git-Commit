@@ -5,7 +5,7 @@
  */
 
 import { GitCommitPattern } from "./commit-pattern";
-import { GitCommitInfo, GitCommitResult } from "./declare";
+import { GitCommitInfo, GitCommitResult, GitCommitTypeFormat } from "./declare";
 
 export class GitCommitBuilder {
 
@@ -28,7 +28,9 @@ export class GitCommitBuilder {
 
     public buildCommit(info: GitCommitInfo): GitCommitResult {
 
-        switch (this._pattern.typeFormat) {
+        const parsedFormat: string | GitCommitTypeFormat = this._pattern.typeFormat as any;
+
+        switch (parsedFormat) {
 
             case 'double-colon':
                 return this._buildDoubleColonCommit(info);
