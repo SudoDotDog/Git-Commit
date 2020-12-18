@@ -5,7 +5,7 @@
  */
 
 import { GitCommitPattern } from "./commit-pattern";
-import { GitCommitResult, GitCommitTypeFormat } from "./declare";
+import { GitCommitTypeFormat } from "./declare";
 
 export class GitCommitVerifier {
 
@@ -26,7 +26,7 @@ export class GitCommitVerifier {
         this._pattern = pattern;
     }
 
-    private _verifyCommitMessage(message: string) {
+    private _verifyCommitMessage(message: string): boolean {
 
         const parsedFormat: string | GitCommitTypeFormat = this._pattern.typeFormat as any;
 
@@ -40,11 +40,16 @@ export class GitCommitVerifier {
             //     return this._buildParenthesesCommitMessage(info);
         }
 
-        throw new Error(`[Git-Commit] Unknown type format: "${this._pattern.typeFormat as any}"`);
+        return false;
     }
 
-    private _verifyDoubleColonCommitMessage(message: string) {
+    private _verifyDoubleColonCommitMessage(message: string): boolean {
 
+        const type: string | undefined = message.match(/[^:(]+/g)[0];
 
+        if (!type
+            || !this._pattern.verifyType(type)) {
+            return false;
+        }
     }
 }
