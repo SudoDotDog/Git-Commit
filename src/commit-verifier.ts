@@ -51,5 +51,52 @@ export class GitCommitVerifier {
             || !this._pattern.verifyType(type)) {
             return false;
         }
+
+        const typeRemoved: string = type.substring(type.length);
+
+        statement: if (typeRemoved.substring(0, 1) === ':') {
+            if (typeRemoved.substring(1, 2) === ' '
+                && typeRemoved.substring(1, 2) !== ' ') {
+                break statement;
+            }
+            return false;
+        } else if (typeRemoved.substring(0, 1) === '(') {
+
+            const rightIndex: number = typeRemoved.indexOf(')');
+
+            const innerContent: string = typeRemoved.substring(1, rightIndex);
+
+            if (innerContent === '*') {
+                break statement;
+            }
+
+            const splited: string[] = innerContent.split(',');
+
+            if (splited.length === 0) {
+                return false;
+            }
+
+            for (const module of splited) {
+                if (!this._pattern.verifyModule(module)) {
+                    return false;
+                }
+            }
+
+            const modulesRemoved = typeRemoved.substring(rightIndex);
+
+            if (modulesRemoved.substring(0, 1) === ':') {
+                if (typeRemoved.substring(1, 2) === ' '
+                    && typeRemoved.substring(1, 2) !== ' ') {
+                    break statement;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }
