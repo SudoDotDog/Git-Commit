@@ -5,7 +5,7 @@
  */
 
 import { GitCommitPattern } from "./commit-pattern";
-import { GitCommitTypeFormat } from "./declare";
+import { GitCommitResult, GitCommitTypeFormat } from "./declare";
 import { verifyBracketsCommitMessage } from "./verify/brackets";
 import { verifyDoubleColonCommitMessage } from "./verify/double-colon";
 import { verifyParenthesesCommitMessage } from "./verify/parentheses";
@@ -27,6 +27,11 @@ export class GitCommitVerifier {
     private constructor(pattern: GitCommitPattern) {
 
         this._pattern = pattern;
+    }
+
+    public verifyCommit(commit: GitCommitResult): boolean {
+
+        return this._verifyCommitMessage(commit.message);
     }
 
     private _verifyCommitMessage(message: string): boolean {
