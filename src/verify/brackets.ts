@@ -8,62 +8,40 @@ import { GitCommitPattern } from "../commit-pattern";
 
 export const verifyBracketsCommitMessage = (pattern: GitCommitPattern, message: string): boolean => {
 
-    const matchResult: string[] | null = message.match(/[^:(]+/g);
-
-    if (!matchResult) {
+    if (message[0] !== '[') {
         return false;
     }
 
-    const type: string | undefined = matchResult[0];
-
-    if (!type
-        || !pattern.verifyType(type)) {
+    const rightBracketIndex: number = message.indexOf(']');
+    if (rightBracketIndex === -1) {
         return false;
     }
 
-    const typeRemoved: string = message.substring(type.length);
+    const typeAndModules: string = message.substring(1, rightBracketIndex);
+    const splitedTypeAndModules: string[] = typeAndModules.split('-');
 
-    statement: if (typeRemoved.substring(0, 1) === ':') {
-
-        if (typeRemoved.substring(1, 2) === ' ') {
-            break statement;
+    if (splitedTypeAndModules.length === 1) {
+        const type: string = splitedTypeAndModules[0].trim();
+        if (!pattern.verifyType(type)) {
+            return false;
         }
-        return false;
-    } else if (typeRemoved.substring(0, 1) === '(') {
+    } else {
 
-        const rightIndex: number = typeRemoved.indexOf(')');
-        const innerContent: string = typeRemoved.substring(1, rightIndex);
-        if (innerContent === '*') {
-            break statement;
-        }
-
-        const splited: string[] = innerContent.split(',');
-        if (splited.length === 0) {
+        const type: string = splitedTypeAndModules[0].trim();
+        if (!pattern.verifyType(type)) {
             return false;
         }
 
+        const modules: string = splitedTypeAndModules[1].trim();
+
+        const splited: string[] = modules.split(',');
         for (const module of splited) {
 
-            const spaceRemovedModule: string = module.trim();
-            if (!pattern.verifyModule(spaceRemovedModule)) {
+            const trimmedModule: string = module.trim();
+            if (!pattern.verifyModule(trimmedModule)) {
                 return false;
             }
         }
-
-        const modulesRemoved: string = typeRemoved.substring(rightIndex + 1);
-
-        if (modulesRemoved.substring(0, 1) === ':') {
-
-            if (modulesRemoved.substring(1, 2) === ' ') {
-                break statement;
-            }
-            return false;
-        }
-
-        return false;
-    } else {
-
-        return false;
     }
 
     return true;
