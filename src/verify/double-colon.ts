@@ -8,7 +8,13 @@ import { GitCommitPattern } from "../commit-pattern";
 
 export const verifyDoubleColonCommitMessage = (pattern: GitCommitPattern, message: string): boolean => {
 
-    const type: string | undefined = message.match(/[^:(]+/g)[0];
+    const matchResult: string[] | null = message.match(/[^:(]+/g);
+
+    if (!matchResult) {
+        return false;
+    }
+
+    const type: string | undefined = matchResult[0];
 
     if (!type
         || !pattern.verifyType(type)) {
