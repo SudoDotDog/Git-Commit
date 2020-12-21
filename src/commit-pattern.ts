@@ -94,10 +94,6 @@ export class GitCommitPattern {
 
     public verifyModule(moduleName: string): boolean {
 
-        if (moduleName === '*') {
-            return true;
-        }
-
         return this._modules.has(moduleName);
     }
 

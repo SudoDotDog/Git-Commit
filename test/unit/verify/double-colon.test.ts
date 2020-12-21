@@ -16,11 +16,33 @@ describe('Given [Double-Colon-Commit-Verify] Functions', (): void => {
 
     const pattern: GitCommitPattern = GitCommitPattern.default();
 
-    it('should be able to verify commit', (): void => {
+    it('should be able to verify commit without colon', (): void => {
 
         const commitMessage: string = `chore: ${chance.sentence()}`;
 
         const result: boolean = verifyDoubleColonCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.true;
+    });
+
+    it('should be able to verify commit with colon wildcard', (): void => {
+
+        const commitMessage: string = `chore(*): ${chance.sentence()}`;
+
+        const result: boolean = verifyDoubleColonCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.true;
+    });
+
+    it('should be able to verify commit with colon named', (): void => {
+
+        const commitMessage: string = `chore(test): ${chance.sentence()}`;
+        const patternWithScope: GitCommitPattern = GitCommitPattern.default();
+        patternWithScope.addModule({
+            name: 'test',
+        });
+
+        const result: boolean = verifyDoubleColonCommitMessage(patternWithScope, commitMessage);
 
         expect(result).to.be.true;
     });

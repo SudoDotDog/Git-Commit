@@ -43,23 +43,26 @@ export const verifyDoubleColonCommitMessage = (pattern: GitCommitPattern, messag
         }
 
         for (const module of splited) {
-            if (!pattern.verifyModule(module)) {
+
+            const spaceRemovedModule: string = module.trim();
+            if (!pattern.verifyModule(spaceRemovedModule)) {
                 return false;
             }
         }
 
-        const modulesRemoved = typeRemoved.substring(rightIndex);
+        const modulesRemoved: string = typeRemoved.substring(rightIndex + 1);
+
         if (modulesRemoved.substring(0, 1) === ':') {
 
-            if (typeRemoved.substring(1, 2) === ' '
-                && typeRemoved.substring(1, 2) !== ' ') {
+            if (modulesRemoved.substring(1, 2) === ' ') {
                 break statement;
             }
             return false;
-        } else {
-            return false;
         }
+
+        return false;
     } else {
+
         return false;
     }
 
