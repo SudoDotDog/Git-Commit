@@ -21,12 +21,11 @@ export const verifyDoubleColonCommitMessage = (pattern: GitCommitPattern, messag
         return false;
     }
 
-    const typeRemoved: string = type.substring(type.length);
+    const typeRemoved: string = message.substring(type.length);
 
     statement: if (typeRemoved.substring(0, 1) === ':') {
 
-        if (typeRemoved.substring(1, 2) === ' '
-            && typeRemoved.substring(1, 2) !== ' ') {
+        if (typeRemoved.substring(1, 2) === ' ') {
             break statement;
         }
         return false;
