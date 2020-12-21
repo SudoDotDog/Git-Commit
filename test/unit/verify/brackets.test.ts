@@ -34,4 +34,27 @@ describe('Given [Brackets-Commit-Verify] functions', (): void => {
 
         expect(result).to.be.true;
     });
+
+    it('should be able to verify commit with module named', (): void => {
+
+        const commitMessage: string = `[chore - test] ${chance.sentence()}`;
+        const patternWithScope: GitCommitPattern = GitCommitPattern.default();
+        patternWithScope.setTypeFormat('brackets');
+        patternWithScope.addModule({
+            name: 'test',
+        });
+
+        const result: boolean = verifyBracketsCommitMessage(patternWithScope, commitMessage);
+
+        expect(result).to.be.true;
+    });
+
+    it('should be able to verify commit with module named - sad path', (): void => {
+
+        const commitMessage: string = `[chore - test] ${chance.sentence()}`;
+
+        const result: boolean = verifyBracketsCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.false;
+    });
 });
