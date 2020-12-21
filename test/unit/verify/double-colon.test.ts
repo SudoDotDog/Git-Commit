@@ -7,13 +7,21 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
+import { GitCommitPattern } from "../../../src/commit-pattern";
+import { verifyDoubleColonCommitMessage } from "../../../src/verify/double-colon";
 
 describe('Given [Double-Colon-Commit-Verify] Functions', (): void => {
 
-    const chance: Chance.Chance = new Chance('placeholder');
+    const chance: Chance.Chance = new Chance('verify-double-colon-commit-verify');
 
-    it('placeholder', (): void => {
+    const pattern: GitCommitPattern = GitCommitPattern.default();
 
-        expect(chance.string()).to.be.not.equal(chance.string());
+    it('should be able to verify commit', (): void => {
+
+        const commitMessage: string = `chore: ${chance.sentence()}`;
+
+        const result: boolean = verifyDoubleColonCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.true;
     });
 });
