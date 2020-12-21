@@ -66,5 +66,14 @@ export const verifyDoubleColonCommitMessage = (pattern: GitCommitPattern, messag
         return false;
     }
 
-    return true;
+    const colonIndex: number = message.indexOf(':');
+
+    const description: string = message.substring(colonIndex + 1);
+    if (description[0] !== ' ') {
+        return false;
+    }
+
+    const descriptionTrimmed: string = description.substring(1);
+
+    return descriptionTrimmed.length >= 1;
 };
