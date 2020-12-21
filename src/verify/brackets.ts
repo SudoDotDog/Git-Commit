@@ -21,6 +21,7 @@ export const verifyBracketsCommitMessage = (pattern: GitCommitPattern, message: 
     const splitedTypeAndModules: string[] = typeAndModules.split('-');
 
     if (splitedTypeAndModules.length === 1) {
+
         const type: string = splitedTypeAndModules[0].trim();
         if (!pattern.verifyType(type)) {
             return false;
