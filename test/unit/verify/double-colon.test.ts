@@ -16,7 +16,7 @@ describe('Given [Double-Colon-Commit-Verify] functions', (): void => {
 
     const pattern: GitCommitPattern = GitCommitPattern.default();
 
-    it('should be able to verify commit without colon', (): void => {
+    it('should be able to verify commit without module', (): void => {
 
         const commitMessage: string = `chore: ${chance.sentence()}`;
 
@@ -25,7 +25,7 @@ describe('Given [Double-Colon-Commit-Verify] functions', (): void => {
         expect(result).to.be.true;
     });
 
-    it('should be able to verify commit with colon wildcard', (): void => {
+    it('should be able to verify commit with module wildcard', (): void => {
 
         const commitMessage: string = `chore(*): ${chance.sentence()}`;
 
@@ -34,7 +34,7 @@ describe('Given [Double-Colon-Commit-Verify] functions', (): void => {
         expect(result).to.be.true;
     });
 
-    it('should be able to verify commit with colon named - happy path', (): void => {
+    it('should be able to verify commit with module named - happy path', (): void => {
 
         const commitMessage: string = `chore(test): ${chance.sentence()}`;
         const patternWithScope: GitCommitPattern = GitCommitPattern.default();
@@ -47,7 +47,7 @@ describe('Given [Double-Colon-Commit-Verify] functions', (): void => {
         expect(result).to.be.true;
     });
 
-    it('should be able to verify commit with colon named - sad path', (): void => {
+    it('should be able to verify commit with module named - sad path', (): void => {
 
         const commitMessage: string = `chore(test): ${chance.sentence()}`;
 
