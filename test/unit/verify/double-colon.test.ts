@@ -34,7 +34,7 @@ describe('Given [Double-Colon-Commit-Verify] Functions', (): void => {
         expect(result).to.be.true;
     });
 
-    it('should be able to verify commit with colon named', (): void => {
+    it('should be able to verify commit with colon named - happy path', (): void => {
 
         const commitMessage: string = `chore(test): ${chance.sentence()}`;
         const patternWithScope: GitCommitPattern = GitCommitPattern.default();
@@ -45,5 +45,14 @@ describe('Given [Double-Colon-Commit-Verify] Functions', (): void => {
         const result: boolean = verifyDoubleColonCommitMessage(patternWithScope, commitMessage);
 
         expect(result).to.be.true;
+    });
+
+    it('should be able to verify commit with colon named - sad path', (): void => {
+
+        const commitMessage: string = `chore(test): ${chance.sentence()}`;
+
+        const result: boolean = verifyDoubleColonCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.false;
     });
 });
