@@ -8,6 +8,7 @@ import { GitCommitPattern } from "./commit-pattern";
 import { GitCommitTypeFormat } from "./declare";
 import { verifyBracketsCommitMessage } from "./verify/brackets";
 import { verifyDoubleColonCommitMessage } from "./verify/double-colon";
+import { verifyParenthesesCommitMessage } from "./verify/parentheses";
 
 export class GitCommitVerifier {
 
@@ -38,8 +39,8 @@ export class GitCommitVerifier {
                 return verifyDoubleColonCommitMessage(this._pattern, message);
             case 'brackets':
                 return verifyBracketsCommitMessage(this._pattern, message);
-            // case 'parentheses':
-            //     return this._buildParenthesesCommitMessage(info);
+            case 'parentheses':
+                return verifyParenthesesCommitMessage(this._pattern, message);
         }
 
         return false;
