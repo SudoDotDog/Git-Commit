@@ -10,7 +10,7 @@ import * as Chance from "chance";
 import { GitCommitPattern } from "../../../src/commit-pattern";
 import { verifyDoubleColonCommitMessage } from "../../../src/verify/double-colon";
 
-describe('Given [Double-Colon-Commit-Verify] Functions', (): void => {
+describe('Given [Double-Colon-Commit-Verify] functions', (): void => {
 
     const chance: Chance.Chance = new Chance('verify-double-colon-commit-verify');
 
