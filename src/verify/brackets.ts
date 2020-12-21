@@ -48,5 +48,12 @@ export const verifyBracketsCommitMessage = (pattern: GitCommitPattern, message: 
         }
     }
 
-    return true;
+    const description: string = message.substring(rightBracketIndex + 1);
+    if (description[0] !== ' ') {
+        return false;
+    }
+
+    const descriptionTrimmed: string = description.substring(1);
+
+    return descriptionTrimmed.length >= 1;
 };
