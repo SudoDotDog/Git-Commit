@@ -34,7 +34,7 @@ export class GitCommitVerifier {
         switch (parsedFormat) {
 
             case 'double-colon':
-                return this._verifyDoubleColonCommitMessage(message);
+                return verifyDoubleColonCommitMessage(this._pattern, message);
             // case 'brackets':
             //     return this._buildBracketsCommitMessage(info);
             // case 'parentheses':
@@ -42,10 +42,5 @@ export class GitCommitVerifier {
         }
 
         return false;
-    }
-
-    private _verifyDoubleColonCommitMessage(message: string): boolean {
-
-        return verifyDoubleColonCommitMessage(this._pattern, message);
     }
 }
