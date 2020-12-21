@@ -25,4 +25,13 @@ describe('Given [Brackets-Commit-Verify] functions', (): void => {
 
         expect(result).to.be.true;
     });
+
+    it('should be able to verify commit with module wildcard', (): void => {
+
+        const commitMessage: string = `[chore - *] ${chance.sentence()}`;
+
+        const result: boolean = verifyBracketsCommitMessage(pattern, commitMessage);
+
+        expect(result).to.be.true;
+    });
 });

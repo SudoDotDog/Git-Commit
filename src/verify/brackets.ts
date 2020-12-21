@@ -20,7 +20,7 @@ export const verifyBracketsCommitMessage = (pattern: GitCommitPattern, message: 
     const typeAndModules: string = message.substring(1, rightBracketIndex);
     const splitedTypeAndModules: string[] = typeAndModules.split('-');
 
-    if (splitedTypeAndModules.length === 1) {
+    statement: if (splitedTypeAndModules.length === 1) {
 
         const type: string = splitedTypeAndModules[0].trim();
         if (!pattern.verifyType(type)) {
@@ -34,6 +34,9 @@ export const verifyBracketsCommitMessage = (pattern: GitCommitPattern, message: 
         }
 
         const modules: string = splitedTypeAndModules[1].trim();
+        if (modules === '*') {
+            break statement;
+        }
 
         const splited: string[] = modules.split(',');
         for (const module of splited) {
